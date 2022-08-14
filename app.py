@@ -29,7 +29,7 @@ def csv_dynamodb_sync():
         # scheduler.shutdown()
         print("Invalid input in CSV")
 
-scheduler.add_job(csv_dynamodb_sync, 'interval', seconds=5)
+scheduler.add_job(csv_dynamodb_sync, 'interval', seconds=20)
 scheduler.start()
 
 #Run on all request
@@ -144,6 +144,7 @@ def get_review_filtered_titles(current_user):
         FilterExpression=Attr('reviews_from_users').gt(data['review'])& Attr('language').eq(data['language']),
         ProjectionExpression = 'id,title,reviews_from_users'
     )
+    # return response
     return {'Count':response['Count'],"Data":sorted(response['Items'],key=lambda x:int(x['reviews_from_users']),reverse=True)}
 
 def compare_amt(year,amt,dict_year,item,currency_conversion):
