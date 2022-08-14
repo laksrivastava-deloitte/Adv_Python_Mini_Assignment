@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "291a6062-8111-421d-9a83-4de58fc0dfaf",
+		"name": "Flask Mini Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User Table",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/createUserTable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"createUserTable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"admin\",\n    \"password\": \"abcd1234\",\n    \"is_admin\": true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/registration",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = JSON.parse(responseBody);",
+							"",
+							"let token = response.token;",
+							"",
+							"pm.collectionVariables.set(\"TOKEN\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Striker\",\n  \"password\":\"abcd1234\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User ____Auth: Admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/getAllUser",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"getAllUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movie Table ____Auth: Admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/createTable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"createTable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie Table ____Auth: Admin",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/deleteTable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deleteTable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Table ____Auth: Admin",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/deleteUserTable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deleteUserTable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Load Movie From CSV ____Auth: Admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loadMovie",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loadMovie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movie ____Auth: Admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"tt0015771\",\n  \"title\": \"Hello Chess\",\n  \"original_title\": \"\",\n  \"year\": \"\",\n  \"date_published\": \"\",\n  \"genre\": \"\",\n  \"duration\": \"\",\n  \"country\": \"India\",\n  \"language\": \"\",\n  \"director\": \"\",\n  \"writer\": \"\",\n  \"production_company\": \"\",\n  \"actors\": \"Queen\",\n  \"description\": \"\",\n  \"avg_vote\": \"\",\n  \"votes\": \"2\",\n  \"budget\": \"\",\n  \"usa_gross_income\": \"\",\n  \"worlwide_gross_income\": \"\",\n  \"metascore\": \"\",\n  \"reviews_from_users\": \"\",\n  \"reviews_from_critics\": \"2.1\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/createMovie",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"createMovie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Movie ____Auth: All",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/getMovie/tt0009611",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"getMovie",
+						"tt0009611"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Movies ____Auth: All",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/getAllMovie",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"getAllMovie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie ____Auth: Admin",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Under\",\n  \"password\":\"Taker\",\n  \"is_admin\":true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/deleteMovie/tt0017004",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deleteMovie",
+						"tt0017004"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Movie ____Auth: Admin",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"\",\n  \"title\": \"World War 3\",\n  \"original_title\": \"Lakshya the leader\",\n  \"year\": \"2022\",\n  \"date_published\": \"\",\n  \"genre\": \"\",\n  \"duration\": \"\",\n  \"country\": \"India\",\n  \"language\": \"Hindi\",\n  \"director\": \"\",\n  \"writer\": \"Russia-Ukrane\",\n  \"production_company\": \"\",\n  \"actors\": \"\",\n  \"description\": \"\",\n  \"avg_vote\": \"\",\n  \"votes\": \"1111\",\n  \"budget\": \"\",\n  \"usa_gross_income\": \"\",\n  \"worlwide_gross_income\": \"\",\n  \"metascore\": \"\",\n  \"reviews_from_users\": \"\",\n  \"reviews_from_critics\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/updateMovie/tt0016939",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"updateMovie",
+						"tt0016939"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Q 1 ____Auth: All",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"director\":\"D.W. Griffith\",\n  \"start_year\":\"1915\",\n  \"end_year\":\"1920\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/titles",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"titles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Q 2 ____Auth: All",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"review\":20,\n  \"language\":\"English\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/reviewFilter",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"reviewFilter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Q 3 ____Auth: All",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"country\":\"Sweden\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/budgetTitle",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"budgetTitle"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
+		}
+	]
+}
