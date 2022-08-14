@@ -44,7 +44,7 @@ def after_request_time(response):
     response.headers["X-TIME-TO-EXECUTE"] = f"{time_diff} ms."
     return response
 
-
+#Check for token validity
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -69,7 +69,7 @@ def token_required(f):
     return decorated
 
 
-#Create User Table
+#Create User Table   :Only Admined Allowed   :Token Required
 @app.route('/createUserTable')
 def create_user_table():
     is_user_table_created = User.create_table_user()
@@ -78,7 +78,7 @@ def create_user_table():
     else:
         return {'message': 'User Table already exists'}, 400
 
-#Create Movie Table
+#Create Movie Table   :Only Admined Allowed   :Token Required
 @app.route('/createTable')
 @token_required
 def create_table(current_user):
@@ -90,7 +90,7 @@ def create_table(current_user):
     else:
         return {'message': 'Movie Table already exists'}, 400
 
-#Load Movies from CSV FIle
+#Load Movies from CSV FIle   :Only Admined Allowed   :Token Required
 @app.route('/loadMovie')
 @token_required
 def load_movie(current_user):
@@ -99,7 +99,7 @@ def load_movie(current_user):
     MovieItem.upload_data_in_table()
     return {'message': 'Movie loaded from csv successfully'}
 
-#Delete Movie Table
+#Delete Movie Table          :Only Admined Allowed   :Token Required
 @app.route('/deleteTable', methods=['DELETE'])
 @token_required
 def delete_table(current_user):
@@ -111,7 +111,7 @@ def delete_table(current_user):
     else:
         return {'message': 'Movie Table not exists'}, 400
 
-#Delete User Table
+#Delete User Table          :Only Admined Allowed   :Token Required
 @app.route('/deleteUserTable', methods=['DELETE'])
 @token_required
 def delete_user_table(current_user):
@@ -123,7 +123,7 @@ def delete_user_table(current_user):
     else:
         return {'message': 'User Table not exists'}, 400
 
-# Question: 1
+# Question: 1               :All Allowed   :Token Required
 @app.route('/titles',methods=['POST'])
 @token_required
 def get_titles(current_user):
@@ -135,7 +135,7 @@ def get_titles(current_user):
     )
     return {"Count":response['Count'],"Items":response['Items']}
 
-# Question: 2
+# Question: 2              :All Allowed   :Token Required
 @app.route('/reviewFilter',methods=['POST'])
 @token_required
 def get_review_filtered_titles(current_user):
@@ -147,6 +147,7 @@ def get_review_filtered_titles(current_user):
     # return response
     return {'Count':response['Count'],"Data":sorted(response['Items'],key=lambda x:int(x['reviews_from_users']),reverse=True)}
 
+# Helper function for Question 3
 def compare_amt(year,amt,dict_year,item,currency_conversion):
     year=int(year)
     if(amt.find('$')!=-1):
@@ -168,7 +169,7 @@ def compare_amt(year,amt,dict_year,item,currency_conversion):
     else:
         dict_year[year]={'budget':amt,'value':item}
 
-# Question: 3
+# Question: 3            :All Allowed   :Token Required
 @app.route('/budgetTitle',methods=['POST'])
 @token_required
 def get_highest_budget_titles(current_user):
@@ -187,7 +188,7 @@ def get_highest_budget_titles(current_user):
     # print(dict_year)
     return dict_year
 
-#Get Single Movie
+#Get Single Movie        :All Allowed   :Token Required
 @app.route('/getMovie/<string:id>')
 @token_required
 def find_movie(current_user,id):
@@ -205,13 +206,13 @@ def find_user(name):
     else:
         return {'message': 'movie not found'}, 400
 
-#Get All Movie
+#Get All Movie           :All Allowed   :Token Required
 @app.route('/getAllMovie')
 @token_required
 def find_all_movie(current_user):
     return {"movieList": MovieItem.get_all_movie()}
 
-#Get All Users
+#Get All Users           :Only Admin Allowed   :Token Required
 @app.route('/getAllUser')
 @token_required
 def find_all_user(current_user):
@@ -219,7 +220,7 @@ def find_all_user(current_user):
         return {"message":"Only admin are allowed to use this functionality"},401
     return {"userList": User.get_all_users()}
 
-#Update Movie
+#Update Movie             :Only Admin Allowed   :Token Required
 @app.route('/updateMovie/<string:id>', methods=['PUT'])
 @token_required
 def update_movie(current_user,id):
@@ -230,7 +231,7 @@ def update_movie(current_user,id):
     response = movie_obj.update_movie(id)
     return {'message': 'Movie updated Successfully', 'updated field': response['Attributes']}
 
-#Create single movie
+#Create single movie      :Only Admin Allowed   :Token Required
 @app.route('/createMovie', methods=['POST'])
 @token_required
 def create_movie(current_user):
@@ -258,7 +259,7 @@ def create_user():
     else:
         return {'result': 'Failed', "message": 'user with same name already exists'}, 400
 
-
+#Delete Movie            :Only Admin Allowed   :Token Required
 @app.route('/deleteMovie/<string:id>', methods=['DELETE'])
 @token_required
 def delete_movie(current_user,id):

@@ -20,8 +20,10 @@ class MovieItem:
         region_name=config.REGION_NAME
     )
 
+    #Table Movie is linked by variable
     movie_table = resource.Table('Movie')
 
+    #Helper function for csv_to_list     :convert , seperated line to list
     @staticmethod
     def parts(data):
         delimiter = ''
@@ -40,6 +42,7 @@ class MovieItem:
         compos.append(len(data))
         return [ data[compos[i]+1:compos[i+1]] for i in range(len(compos)-1)]
 
+    #Helper function for upload_data_in_table    :return all movies in list
     @staticmethod
     def csv_to_list():
         with open('movies.csv', 'r') as f:
@@ -161,8 +164,10 @@ class MovieItem:
         else:
             return False
     
+    #Run Ater every fixed interval of time
     @staticmethod
     def sync_with_csv():
+        #Will check file from last
         with open('movies.csv','r') as file:
             for row in reversed(list(csv.reader(file))):
                 movie_item=MovieItem.find_movie_by_id(row[0])
