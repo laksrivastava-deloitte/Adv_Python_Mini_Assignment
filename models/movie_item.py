@@ -1,9 +1,9 @@
 from unicodedata import decimal
 from urllib import response
 from boto3 import resource
+import csv
 import config
 import re
-import csv
 
 class MovieItem:
 
@@ -149,18 +149,6 @@ class MovieItem:
         else:
             return False
 
-
-    @staticmethod
-    def delete_table_movie():
-        table_name = 'Movie'
-        table_names = [table.name for table in MovieItem.resource.tables.all()]
-        if table_name in table_names:
-            MovieItem.movie_table.delete()
-            return True
-        else:
-            return False
-
-    
     @staticmethod
     def sync_with_csv():
         with open('movies.csv','r') as file:
@@ -179,6 +167,19 @@ class MovieItem:
                     )
                     movie_item=MovieItem.find_movie_by_id(data['id'])
                     print("New Data Added: ",movie_item['Item'])
+
+
+    @staticmethod
+    def delete_table_movie():
+        table_name = 'Movie'
+        table_names = [table.name for table in MovieItem.resource.tables.all()]
+        if table_name in table_names:
+            MovieItem.movie_table.delete()
+            return True
+        else:
+            return False
+    
+
         
 
     

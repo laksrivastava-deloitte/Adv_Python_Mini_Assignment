@@ -14,23 +14,12 @@ import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from boto3.dynamodb.conditions import Key, Attr
 
-from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
-
-scheduler = BackgroundScheduler()
-def csv_dynamodb_sync():
-    try:
-        MovieItem.sync_with_csv()
-    except:
-        # scheduler.shutdown()
-        print("Invalid input in CSV")
-
-scheduler.add_job(csv_dynamodb_sync, 'interval', seconds=5)
-scheduler.start()
 
 #Run on all request
 @app.before_request
@@ -43,6 +32,17 @@ def after_request_time(response):
     time_diff=int((time.time()- g.start)*1000)
     response.headers["X-TIME-TO-EXECUTE"] = f"{time_diff} ms."
     return response
+
+scheduler = BackgroundScheduler()
+def csv_dynamodb_sync():
+    try:
+        MovieItem.sync_with_csv()
+    except:
+        # scheduler.shutdown()
+        print("Invalid input in CSV")
+
+scheduler.add_job(csv_dynamodb_sync, 'interval', seconds=5)
+scheduler.start()
 
 def token_required(f):
     @wraps(f)
