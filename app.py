@@ -2,6 +2,7 @@ from crypt import methods
 from email import message
 from genericpath import exists
 from locale import currency
+from sched import scheduler
 from flask import Flask, request,jsonify, make_response, Response
 from models.movie_item import MovieItem
 from models.user import User
@@ -16,7 +17,20 @@ from functools import wraps
 
 from boto3.dynamodb.conditions import Key, Attr
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 app = Flask(__name__)
+
+scheduler = BackgroundScheduler()
+def csv_dynamodb_sync():
+    try:
+        MovieItem.sync_with_csv()
+    except:
+        # scheduler.shutdown()
+        print("Invalid input in CSV")
+
+scheduler.add_job(csv_dynamodb_sync, 'interval', seconds=5)
+scheduler.start()
 
 #Run on all request
 @app.before_request

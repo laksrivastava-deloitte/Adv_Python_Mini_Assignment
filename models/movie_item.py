@@ -3,6 +3,7 @@ from urllib import response
 from boto3 import resource
 import config
 import re
+import csv
 
 class MovieItem:
 
@@ -159,6 +160,25 @@ class MovieItem:
         else:
             return False
 
+    
+    @staticmethod
+    def sync_with_csv():
+        with open('movies.csv','r') as file:
+            for row in reversed(list(csv.reader(file))):
+                movie_item=MovieItem.find_movie_by_id(row[0])
+                if 'Item' in movie_item.keys():
+                    print("Everything is synced")
+                    break
+                else:
+                    index,data=0,{}
+                    for i in MovieItem.ALL_ATTRIBUTES:
+                        data[i]=row[index]
+                        index=index+1
+                    response = MovieItem.movie_table.put_item(
+                        Item=data
+                    )
+                    movie_item=MovieItem.find_movie_by_id(data['id'])
+                    print("New Data Added: ",movie_item['Item'])
         
 
     
